@@ -1,7 +1,7 @@
 /*
 //Author      : 6R347-0BL1V10N
 //date        : August 9, 2018
-//purpose     : ProjectEuler.net - Problem 7
+//purpose     : ProjectEuler.net - Problem 8
 
 //description : The four adjacent digits in the 1000-digit number that have the greatest product are 9 × 9 × 8 × 9 = 5832.
 
