@@ -3,7 +3,7 @@
 //date        : August 9, 2018
 //purpose     : ProjectEuler.net - Problem 6
 
-//description : 
+//description :
 
 // The sum of the squares of the first ten natural numbers is,
 // 12 + 22 + ... + 102 = 385
@@ -23,29 +23,28 @@
 
 int main()
 {
-	int sumSqu = 0;
-	int squSum = 0;
-	int result = 0;
+	int sumSqu = 0; //The sum of the squares of the first 100 natural numbers
+	int squSum = 0; //The square of the sum of the first 100 natural numbers
+	int result = 0; //The difference between sumSqu and squSum
 
-	for (int i = 1; i < 10 + 1; i++)
+	for (int i = 1; i < 100 + 1; i++)
 	{
-		sumSqu += std::pow(i, 2);
+		sumSqu += std::pow(i, 2); // square all int between 1-100 and get sum
 	}
-	for (int ii = 1; ii < 10 + 1; ii++)
+	for (int ii = 1; ii < 100 + 1; ii++)
 	{
-		for (int iii = 1; iii < 10 + 1; iii++)
-		{
-			squSum += iii;
-		}
-		std::pow(std::pow(squSum, 2),2);
+		squSum += ii; //sum up 1-100..
 	}
+	squSum = std::pow(squSum, 2);//then square
 
-	std::cout << sumSqu << std::endl << squSum;
+	result = squSum - sumSqu; //result = difference of squSum and sumSqu
+
+	std::cout << "sumSqu: " << sumSqu << std::endl << "squSum: " << squSum << std::endl << "result: " << result;
 
 	std::cin.get(); //so program does not exit straight away
 	return 1; //standard main exit #
 }
 
 /*
-// output : 
+// output : 25164150
 */
