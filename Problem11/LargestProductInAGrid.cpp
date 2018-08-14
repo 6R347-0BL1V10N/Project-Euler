@@ -2,9 +2,7 @@
 //Author      : 6R347-0BL1V10N
 //date        : August 9, 2018
 //purpose     : ProjectEuler.net - Problem 11
-
 //description : In the 20×20 grid below, four numbers along a diagonal line have been marked in red.
-
 08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
 49 49 99 40 17 81 18 57 60 87 17 40 98 43 69 48 04 56 62 00
 81 49 31 73 55 79 14 29 93 71 40 67 53 88 30 03 49 13 36 65
@@ -25,55 +23,78 @@
 20 69 36 41 72 30 23 88 34 62 99 69 82 67 59 85 74 04 36 16
 20 73 35 29 78 31 90 01 74 31 49 71 48 86 81 16 23 57 05 54
 01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48
-
 //The product of these numbers is 26 × 63 × 78 × 14 = 1788696.
-
 //What is the greatest product of four adjacent numbers in the same direction (up, down, left, right, or diagonally) in the 20×20 grid?
 */
 #include <iostream>
 #include <vector>
 #include <fstream>
 
+void diagonalLeft(std::vector<std::vector<int>>& MATRIX, int& ret)
+{
+	int T = 0;
+	const int second = 1;
+	const int third = 2;
+	const int forth = 3;
+
+	for (int row = 3; row < 20; row++)
+	{
+		for (int col = 0; col < 16; col++)
+		{
+			T = MATRIX[row][col] * MATRIX[row - second][col + second] * MATRIX[row - third][col + third] * MATRIX[row - forth][col + forth];
+			if (T > ret)
+			{
+				ret = T;
+				T = 0;
+			}
+			else
+			{
+				T = 0;
+			}
+		}
+	}
+}
+
 void diagonalRight(std::vector<std::vector<int>>& MATRIX, int& ret)
 {
-	for (int loop = 0; col < MATRIX[0].size(); col++)
-	{
-		for (int col; row < MATRIX[0].size(); row++;)
-		{
+	int T = 0;
+	const int second = 1;
+	const int third = 2;
+	const int forth = 3;
 
+	for (int col = 0; col < MATRIX.size() - 3; col++)
+	{
+		for (int row = 0; row < MATRIX.size() - 3; row++)
+		{
+			T = MATRIX[col][row] * MATRIX[col + second][row + second] * MATRIX[col + third][row + third] * MATRIX[col + forth][row + forth];
+			if (T > ret)
+			{
+				ret = T;
+				T = 0;
+			}
+			else
+			{
+				T = 0;
+			}
 		}
 	}
 }
 
 void upDown(std::vector<std::vector<int>>& MATRIX, int& ret)
-{	
-	int numOfLoops = 20 * 20 - 60;
-	int count = 0;
-	int initialCol = 0;
-	int b = 0, c = 0, d = 0;
-	int sum = 0;
+{
 	int T = 0;
 
-	for (int loop = 0; loop < 20; loop++)
+	for (int row = 0; row < 20; row++)
 	{
-		for (int row = 0; row < 17; row++)
+		for (int col = 0; col < 17; col++)
 		{
-			T = MATRIX[row][initialCol];
-			//std::cout << std::endl;
-
-			for (int iii = 1; iii < 4; iii++)
-			{
-				T *= MATRIX[row + iii][loop];
-				//std::cout << " " << MATRIX[row + iii][loop] << " ";
-			}
-			std::cout << std::endl;
+			T = MATRIX[row][col] * MATRIX[row + 1][col] * MATRIX[row + 2][col] * MATRIX[row + 3][col];
 			if (T > ret)
 			{
 				ret = T;
 				T = 0;
 			}
 		}
-		initialCol++;
 	}
 }
 
@@ -85,11 +106,8 @@ void leftRight(std::vector<std::vector<int>>& MATRIX, int& ret)
 	{
 		for (int col = 0; col < MATRIX.size() - 3; col++)
 		{
-			sum = MATRIX[row][col];
-			for (int i = 1; i < 4; i++)
-			{
-				sum *= MATRIX[row][i];
-			}
+			sum = MATRIX[row][col] * MATRIX[row][col + 1] * MATRIX[row][col + 2] * MATRIX[row][col + 3];
+			
 			if (sum > ret)
 			{
 				ret = sum;
@@ -101,6 +119,14 @@ void leftRight(std::vector<std::vector<int>>& MATRIX, int& ret)
 			}
 		}
 	}
+}
+
+void getLargest(std::vector<std::vector<int>>& MATRIX, int& ret)
+{
+//	upDown(MATRIX, ret);
+//	leftRight(MATRIX, ret);
+//	diagonalLeft(MATRIX, ret);
+	diagonalRight(MATRIX, ret);
 }
 
 int main()
@@ -123,19 +149,17 @@ int main()
 		}
 	}
 
-	leftRight(twentyMatrix, greatestProduct);
-	upDown(twentyMatrix, greatestProduct);
-
+	getLargest(twentyMatrix, greatestProduct);
 	std::cout << greatestProduct;
 
 	/*
 	for (int i = 0; i < 20; i++)
 	{
-		for (int ii = 0; ii < 20; ii++)
-		{
-			std::cout << twentyMatrix[i][ii] << " ";
-		}
-		std::cout << std::endl;
+	for (int ii = 0; ii < 20; ii++)
+	{
+	std::cout << twentyMatrix[i][ii] << " ";
+	}
+	std::cout << std::endl;
 	}
 	*/
 	std::cin.get(); //so program does not exit straight away
@@ -143,5 +167,5 @@ int main()
 }
 
 /*
-// output : 
+// output :
 */
