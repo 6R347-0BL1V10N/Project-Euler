@@ -32,24 +32,16 @@
 
 void diagonalLeft(std::vector<std::vector<int>>& MATRIX, int& ret)
 {
-	int T = 0;
-	const int second = 1;
-	const int third = 2;
-	const int forth = 3;
+	int sum = 0;
 
-	for (int row = 3; row < 20; row++)
+	for (size_t i = 3; i < MATRIX.size(); i++)
 	{
-		for (int col = 0; col < 16; col++)
+		for (size_t ii = 0; ii < 16; ii++)
 		{
-			T = MATRIX[row][col] * MATRIX[row - second][col + second] * MATRIX[row - third][col + third] * MATRIX[row - forth][col + forth];
-			if (T > ret)
+			sum = MATRIX[i][ii] * MATRIX[i - 1][ii + 1] * MATRIX[i - 2][ii + 2] * MATRIX[i - 3][ii + 3];
+			if (sum > ret)
 			{
-				ret = T;
-				T = 0;
-			}
-			else
-			{
-				T = 0;
+				ret = sum;
 			}
 		}
 	}
@@ -57,24 +49,17 @@ void diagonalLeft(std::vector<std::vector<int>>& MATRIX, int& ret)
 
 void diagonalRight(std::vector<std::vector<int>>& MATRIX, int& ret)
 {
-	int T = 0;
-	const int second = 1;
-	const int third = 2;
-	const int forth = 3;
+	int sum = 0;
 
-	for (int col = 0; col < MATRIX.size() - 3; col++)
+	for (size_t i = 0; i < MATRIX.size() - 4; i++)
 	{
-		for (int row = 0; row < MATRIX.size() - 3; row++)
+		for (size_t ii = 0; ii < MATRIX.size() - 4; ii++)
 		{
-			T = MATRIX[col][row] * MATRIX[col + second][row + second] * MATRIX[col + third][row + third] * MATRIX[col + forth][row + forth];
-			if (T > ret)
+			sum = MATRIX[i][ii] * MATRIX[i+1][ii + 1] * MATRIX[i + 2][ii + 2] * MATRIX[i + 3][ii + 3];
+			if (sum > ret)
 			{
-				ret = T;
-				T = 0;
-			}
-			else
-			{
-				T = 0;
+				ret = sum;
+				sum = 0;
 			}
 		}
 	}
@@ -82,17 +67,16 @@ void diagonalRight(std::vector<std::vector<int>>& MATRIX, int& ret)
 
 void upDown(std::vector<std::vector<int>>& MATRIX, int& ret)
 {
-	int T = 0;
+	int sum = 0;
 
-	for (int row = 0; row < 20; row++)
+	for (size_t i = 0; i < MATRIX.size(); i++)
 	{
-		for (int col = 0; col < 17; col++)
+		for (size_t ii = 0; ii < MATRIX[0].size() - 4; ii++)
 		{
-			T = MATRIX[row][col] * MATRIX[row + 1][col] * MATRIX[row + 2][col] * MATRIX[row + 3][col];
-			if (T > ret)
+			sum = MATRIX[ii][i] * MATRIX[ii+ 1][i] * MATRIX[ii + 2][i] * MATRIX[ii + 3][i];
+			if (sum > ret)
 			{
-				ret = T;
-				T = 0;
+				ret = sum;
 			}
 		}
 	}
@@ -102,20 +86,14 @@ void leftRight(std::vector<std::vector<int>>& MATRIX, int& ret)
 {
 	int sum = 0;
 
-	for (int row = 0; row < MATRIX[0].size(); row++)
+	for (size_t i = 0; i < MATRIX.size(); i++)
 	{
-		for (int col = 0; col < MATRIX.size() - 3; col++)
+		for (size_t ii = 0; ii < MATRIX[0].size() - 4; ii++)
 		{
-			sum = MATRIX[row][col] * MATRIX[row][col + 1] * MATRIX[row][col + 2] * MATRIX[row][col + 3];
-			
+			sum = MATRIX[i][ii] * MATRIX[i][ii + 1] * MATRIX[i][ii + 2] * MATRIX[i][ii + 3];
 			if (sum > ret)
 			{
 				ret = sum;
-				sum = 0;
-			}
-			else
-			{
-				sum = 0;
 			}
 		}
 	}
@@ -123,9 +101,9 @@ void leftRight(std::vector<std::vector<int>>& MATRIX, int& ret)
 
 void getLargest(std::vector<std::vector<int>>& MATRIX, int& ret)
 {
-//	upDown(MATRIX, ret);
-//	leftRight(MATRIX, ret);
-//	diagonalLeft(MATRIX, ret);
+	upDown(MATRIX, ret);
+	leftRight(MATRIX, ret);
+	diagonalLeft(MATRIX, ret);
 	diagonalRight(MATRIX, ret);
 }
 
@@ -167,5 +145,5 @@ int main()
 }
 
 /*
-// output :
+// output :70600674
 */
