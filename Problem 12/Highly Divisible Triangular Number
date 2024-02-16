@@ -1,1 +1,48 @@
+public class Engine {
+	// A method that returns the number of divisors of a given number
+	public static int numDivisors(long num) {
+	  int count = 0;
+	  // Loop from 1 to the square root of the number
+	  for (long i = 1; i * i <= num; i++) {
+	    // If the number is divisible by i, increment the count by 2
+	    if (num % i == 0) {
+	      count += 2;
+	    }
+	    // If the number is a perfect square, decrement the count by 1
+	    if (i * i == num) {
+	      count--;
+	    }
+	  }
+	  return count;
+	}
 
+	// A method that returns the nth triangle number
+	public static long triangleNumber(int n) {
+	  // Use the formula n * (n + 1) / 2
+	  return (long) n * (n + 1) / 2;
+	}
+
+	// A method that returns the first triangle number that has more than n divisors
+	public static long euler12(int n) {
+	  // Start from the first triangle number
+	  int index = 1;
+	  long triNum = triangleNumber(index);
+	  // Loop until the number of divisors exceeds n
+	  while (numDivisors(triNum) <= n) {
+	    // Increment the index and get the next triangle number
+	    index++;
+	    triNum = triangleNumber(index);
+	  }
+	  // Return the triangle number
+	  return triNum;
+	}
+
+	// A main method that tests the euler12 method
+	public static void main(String[] args) {
+	  // Print the first triangle number that has more than 500 divisors
+	  System.out.println(euler12(500));
+	}
+
+}
+
+OUTPUT: 76576500
